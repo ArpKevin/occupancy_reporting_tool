@@ -104,13 +104,6 @@ def main():
     month = get_user_month()
     nights_per_date_range = calculate_nights_per_date_range(year, month, data)
 
-    print(f"\nNights spent in {month}/{year}:")
-    total_nights = 0
-    for date_range, nights in nights_per_date_range:
-        print(f"{date_range}: {nights}")
-        total_nights += nights
-    print(f"Total nights: {total_nights}")
-
     input("\nPress \"Enter\" to insert the values into the xlsx...")
 
     print("Please wait. This may take a few seconds...")
