@@ -15,29 +15,33 @@ def get_file_name():
         else:
             print("Invalid file name. Try again.")
 
-def main():
-    
-    file_name = get_file_name()
-
+def load_workbook(file_name):
     wb = openpyxl.load_workbook(file_name)
     ws = wb.active
+    return wb, ws
 
+def is_valid_date(item):
+    if isinstance(item, datetime):
+        return True
+    elif isinstance(item, str):
+        try:
+            datetime.strptime(item, '%m/%d/%Y')
+            return True
+        except ValueError:
+            return False
+    return False
+
+def extract_valid_rows(ws):
     data = []
     for row in ws.iter_rows(values_only=True):
-        is_valid_date = False
-        for item in row:
-            if isinstance(item, str):
-                try:
-                    datetime.strptime(item, '%m/%d/%Y')
-                    is_valid_date = True
-                    break
-                except ValueError:
-                    pass
-            elif isinstance(item, datetime):
-                is_valid_date = True
-                break
-        if is_valid_date:
+        if any(is_valid_date(item) for item in row):
             data.append(row)
+    return data
+
+def main():
+    file_name = get_file_name()
+    wb, ws = load_workbook(file_name)
+    data = extract_valid_rows(ws)
 
     while True:
         try:
