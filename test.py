@@ -3,7 +3,7 @@ import os.path
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-def main():
+def get_file_name():
     while True:
         file_name = input("Enter the name of the xlsx file: ")
 
@@ -11,9 +11,13 @@ def main():
             file_name += ".xlsx"
 
         if os.path.isfile(file_name):
-            break
+            return file_name
         else:
             print("Invalid file name. Try again.")
+
+def main():
+    
+    file_name = get_file_name()
 
     wb = openpyxl.load_workbook(file_name)
     ws = wb.active
