@@ -38,31 +38,35 @@ def extract_valid_rows(ws):
             data.append(row)
     return data
 
-def main():
-    file_name = get_file_name()
-    wb, ws = load_workbook(file_name)
-    data = extract_valid_rows(ws)
-
+def get_user_year():
     while True:
         try:
             year = int(input("Enter the year (YYYY): "))
             if 10000 > year > 999:
-                break
+                return year
             else:
                 print("Please enter a number between 1000 and 9999.")
         except ValueError:
             print("Please enter a valid number.")
 
+def get_user_month():
     while True:
         try:
             month = int(input("Enter the month (MM): "))
             if 1 <= month <= 12:
-                break
+                return month
             else:
                 print("Please enter a number between 1 and 12.")
         except ValueError:
             print("Please enter a valid number.")
 
+def main():
+    file_name = get_file_name()
+    wb, ws = load_workbook(file_name)
+    data = extract_valid_rows(ws)
+    year = get_user_year()
+    month = get_user_month()
+    
     nights_per_date_range = []
 
     for row in data:
