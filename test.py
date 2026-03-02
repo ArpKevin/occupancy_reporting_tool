@@ -60,13 +60,7 @@ def get_user_month():
         except ValueError:
             print("Please enter a valid number.")
 
-def main():
-    file_name = get_file_name()
-    wb, ws = load_workbook(file_name)
-    data = extract_valid_rows(ws)
-    year = get_user_year()
-    month = get_user_month()
-    
+def calculate_nights_per_date_range(year, month, data):
     nights_per_date_range = []
 
     for row in data:
@@ -100,8 +94,15 @@ def main():
                 key += ' (Owner)' if 'Owner' in row else ' (Čiščenje / hišnik)'
             
             nights_per_date_range.append((key, 0))
+    return nights_per_date_range
 
-
+def main():
+    file_name = get_file_name()
+    wb, ws = load_workbook(file_name)
+    data = extract_valid_rows(ws)
+    year = get_user_year()
+    month = get_user_month()
+    nights_per_date_range = calculate_nights_per_date_range(year, month, data)
 
     print(f"\nNights spent in {month}/{year}:")
     total_nights = 0
