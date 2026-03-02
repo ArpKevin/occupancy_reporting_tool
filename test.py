@@ -130,15 +130,10 @@ def main():
 
     ws["K1"].value = f"Nights in month ({year} {month_name})"
 
-    for row in ws.iter_rows(min_row=2):
-
-        key = f'{row[1].value} - {row[2].value}'
-
-        x = 2
-        for date_range, nights in nights_per_date_range:
-            ws[f"K{x}"].value = nights
-            x+=1
-
+    x = 2
+    for date_range, nights in nights_per_date_range:
+        ws[f"K{x}"].value = nights
+        x+=1
 
     wb.save(file_name)
 
