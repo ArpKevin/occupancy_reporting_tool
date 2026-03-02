@@ -57,10 +57,8 @@ while True:
 nights_per_date_range = []
 
 for row in data:
-    arrival_date_str = datetime.strftime(row[1], '%m/%d/%Y')
-    arrival_date = datetime.strptime(arrival_date_str, '%m/%d/%Y')
-    leaving_date_str = datetime.strftime(row[2], '%m/%d/%Y')
-    leaving_date = datetime.strptime(leaving_date_str, '%m/%d/%Y')
+    arrival_date = row[1]
+    leaving_date = row[2]
 
     if leaving_date >= datetime(year, month, 1) and arrival_date <= datetime(year, month, 1) + relativedelta(months=1, days=-1):
         start_date = datetime(year, month, 1)
