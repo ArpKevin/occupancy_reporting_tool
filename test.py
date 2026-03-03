@@ -1,4 +1,5 @@
 import openpyxl
+from dateutil.parser import parse
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from file_utils.validator import get_file_name_cli
@@ -13,9 +14,9 @@ def is_valid_date(item):
         return True
     elif isinstance(item, str):
         try:
-            datetime.strptime(item, '%m/%d/%Y')
+            parse(item)
             return True
-        except ValueError:
+        except (ValueError, TypeError):
             return False
     return False
 
