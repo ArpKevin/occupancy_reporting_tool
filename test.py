@@ -3,13 +3,15 @@ import os.path
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
+def normalize_file_name(file_name, file_extension):
+    if not file_name.endswith(file_extension):
+        return file_name + file_extension
+    return file_name
+
 def get_file_name():
     while True:
         file_name = input("Enter the name of the xlsx file: ")
-
-        if not file_name.endswith(".xlsx"):
-            file_name += ".xlsx"
-
+        file_name = normalize_file_name(file_name, ".xlsx")
         if os.path.isfile(file_name):
             return file_name
         else:
