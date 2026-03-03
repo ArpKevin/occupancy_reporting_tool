@@ -11,11 +11,17 @@ def normalize_file_name(file_name, file_extension):
 def is_existing_file(file_name):
     return os.path.isfile(file_name)
 
-def get_file_name():
+def validate_file(user_input, extension=".xlsx"):
+    file_name = normalize_file_name(user_input, extension)
+    if is_existing_file(file_name):
+        return file_name
+    return None
+
+def get_file_name_cli():
     while True:
-        file_name = input("Enter the name of the xlsx file: ")
-        file_name = normalize_file_name(file_name, ".xlsx")
-        if is_existing_file(file_name):
+        user_input = input("Enter the name of the xlsx file: ")
+        file_name = validate_file(user_input)
+        if file_name:
             return file_name
         else:
             print("Invalid file name. Try again.")
@@ -131,7 +137,7 @@ def insert_nights(year, month, nights_per_date_range, ws, wb, file_name):
     input("\nData inserted successfully.")
 
 def main():
-    file_name = get_file_name()
+    file_name = get_file_name_cli()
     wb, ws = load_workbook(file_name)
     data = extract_valid_rows(ws)
     year = get_user_year()
