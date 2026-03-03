@@ -45,7 +45,7 @@ def insert_nights(year, month, nights_per_date_range, ws, wb, file_name):
     ws["K1"].value = f"Nights in month ({year} {month_name})"
 
     x = 2
-    for date_range, nights in nights_per_date_range:
+    for nights in nights_per_date_range:
         ws[f"K{x}"].value = nights
         x+=1
 
