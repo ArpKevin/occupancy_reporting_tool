@@ -13,12 +13,3 @@ def validate_file(user_input, extension=".xlsx"):
     if is_existing_file(file_name):
         return file_name
     return None
-
-def get_file_name_cli():
-    while True:
-        user_input = input("Enter the name of the xlsx file: ")
-        file_name = validate_file(user_input)
-        if file_name:
-            return file_name
-        else:
-            print("Invalid file name. Try again.")
