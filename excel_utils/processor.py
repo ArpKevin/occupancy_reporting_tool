@@ -9,26 +9,35 @@ def get_month_range(year, month):
 def is_within_range(arrival_date, leaving_date, start_date, end_date):
     return leaving_date >= start_date and arrival_date <= end_date
 
+def is_special_guest(guest_name):
+    return guest_name in ("Owner", "Čiščenje / hišnik")
+
 def calculate_nights_per_date_range(data, headers, start_date, end_date, year, month):
     nights_per_date_range = []
 
     idx_arrival_date = headers.index("Date from")
     idx_leaving_date = headers.index("Date until")
+    idx_rent_source = headers.index("Rent source")
 
     for row in data:
         arrival_date = row[idx_arrival_date]
         leaving_date = row[idx_leaving_date]
+        guest_name = row[idx_rent_source]
 
-        if is_within_range(arrival_date, leaving_date, start_date, end_date):
-            nights = (min(end_date, leaving_date) - max(start_date, arrival_date)).days + 1
-
-            if leaving_date.month == month and leaving_date.year == year:
-                nights -= 1
-
-            if 'Owner' in row or 'Čiščenje / hišnik' in row:
-                nights = 0
-
-            nights_per_date_range.append(nights)
-        else:        
+        if is_special_guest(guest_name):
             nights_per_date_range.append(0)
+            continue
+
+        if not is_within_range(arrival_date, leaving_date, start_date, end_date):
+            nights_per_date_range.append(0)
+            continue
+
+        # Calculate overlapping nights
+        nights = (min(end_date, leaving_date) - max(start_date, arrival_date)).days + 1
+
+        # Subtract one night if the leaving date is in the checked month
+        if leaving_date.year == year and leaving_date.month == month:
+            nights -= 1
+
+        nights_per_date_range.append(nights)
     return nights_per_date_range
