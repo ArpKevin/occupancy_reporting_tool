@@ -33,7 +33,7 @@ def main():
     month = get_user_month()
     start_date, end_date = get_month_range(year, month)
     nights_per_date_range = calculate_nights_per_date_range(data, headers, start_date, end_date, year, month)
-    insert_nights(year, month, nights_per_date_range, ws, wb, file_name)
+    insert_nights(nights_per_date_range, ws, wb, file_name, headers)
 
 if __name__ == "__main__":
     main()
