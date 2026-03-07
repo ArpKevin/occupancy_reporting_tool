@@ -5,7 +5,8 @@ from datetime import datetime
 def load_workbook(file_name):
     wb = openpyxl.load_workbook(file_name)
     ws = wb.active
-    return wb, ws
+    headers = [cell for cell in next(ws.iter_rows(values_only=True))]
+    return wb, ws, headers
 
 def is_valid_date(item):
     if isinstance(item, datetime):
@@ -18,9 +19,13 @@ def is_valid_date(item):
             return False
     return False
 
-def extract_valid_rows(ws):
+def extract_valid_rows(ws, headers):
     data = []
+
+    idx_arrival_date = headers.index("Date from")
+    idx_leaving_date = headers.index("Date until")
+
     for row in ws.iter_rows(values_only=True):
-        if any(is_valid_date(item) for item in row):
+        if is_valid_date(row[idx_arrival_date]) and is_valid_date(row[idx_leaving_date]):
             data.append(row)
     return data

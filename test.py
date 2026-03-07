@@ -27,8 +27,8 @@ def get_user_month():
 
 def main():
     file_name = get_file_name_cli()
-    wb, ws = load_workbook(file_name)
-    data = extract_valid_rows(ws)
+    wb, ws, headers = load_workbook(file_name)
+    data = extract_valid_rows(ws, headers)
     year = get_user_year()
     month = get_user_month()
     nights_per_date_range = calculate_nights_per_date_range(year, month, data)
