@@ -31,7 +31,7 @@ def main():
     data = extract_valid_rows(ws, headers)
     year = get_user_year()
     month = get_user_month()
-    nights_per_date_range = calculate_nights_per_date_range(year, month, data)
+    nights_per_date_range = calculate_nights_per_date_range(year, month, data, headers)
     insert_nights(year, month, nights_per_date_range, ws, wb, file_name)
 
 if __name__ == "__main__":

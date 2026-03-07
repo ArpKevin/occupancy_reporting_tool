@@ -1,12 +1,15 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-def calculate_nights_per_date_range(year, month, data):
+def calculate_nights_per_date_range(year, month, data, headers):
     nights_per_date_range = []
 
+    idx_arrival_date = headers.index("Date from")
+    idx_leaving_date = headers.index("Date until")
+
     for row in data:
-        arrival_date = row[1]
-        leaving_date = row[2]
+        arrival_date = row[idx_arrival_date]
+        leaving_date = row[idx_leaving_date]
 
         start_date = datetime(year, month, 1)
         end_date = datetime(year+1, 1, 1) - timedelta(days=1) if month == 12 else datetime(year, month+1, 1) - timedelta(days=1)
