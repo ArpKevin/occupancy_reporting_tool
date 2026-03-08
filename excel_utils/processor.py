@@ -1,3 +1,5 @@
+from config import ARRIVAL_HEADER, LEAVING_HEADER, RENT_HEADER, SPECIAL_GUESTS
+
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -10,14 +12,14 @@ def is_within_range(arrival_date, leaving_date, start_date, end_date):
     return leaving_date >= start_date and arrival_date <= end_date
 
 def is_special_guest(guest_name):
-    return guest_name in ("Owner", "Čiščenje / hišnik")
+    return guest_name in SPECIAL_GUESTS
 
 def calculate_nights_per_date_range(data, headers, start_date, end_date, year, month):
     nights_per_date_range = []
 
-    idx_arrival_date = headers.index("Date from")
-    idx_leaving_date = headers.index("Date until")
-    idx_rent_source = headers.index("Rent source")
+    idx_arrival_date = headers.index(ARRIVAL_HEADER)
+    idx_leaving_date = headers.index(LEAVING_HEADER)
+    idx_rent_source = headers.index(RENT_HEADER)
 
     for row in data:
         arrival_date = row[idx_arrival_date]

@@ -1,3 +1,5 @@
+from config import ARRIVAL_HEADER, LEAVING_HEADER
+
 import openpyxl
 from dateutil.parser import parse
 from datetime import datetime
@@ -22,8 +24,8 @@ def is_valid_date(item):
 def extract_valid_rows(ws, headers):
     data = []
 
-    idx_arrival_date = headers.index("Date from")
-    idx_leaving_date = headers.index("Date until")
+    idx_arrival_date = headers.index(ARRIVAL_HEADER)
+    idx_leaving_date = headers.index(LEAVING_HEADER)
 
     for row in ws.iter_rows(values_only=True):
         if is_valid_date(row[idx_arrival_date]) and is_valid_date(row[idx_leaving_date]):
