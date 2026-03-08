@@ -1,6 +1,4 @@
-from openpyxl.utils import get_column_letter
-
-def insert_nights(nights_per_date_range, ws, wb, file_name, headers):
+def insert_nights(nights_per_date_range, ws, wb, file_name):
     header_name = "Nights in month"
 
     # Try to find the column that already has this header
